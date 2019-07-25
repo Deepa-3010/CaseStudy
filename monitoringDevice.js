@@ -18,40 +18,17 @@ function MonitoringDevice(name,id,touch,screensize)
     }
 
 }
-
-var m1=new MonitoringDevice("GoldmanWay30E",1,false,10);
-var m2=new MonitoringDevice("GoldmanWay40E",2,false,12);
-var m3=new MonitoringDevice("Efficia10",3,false,10);
-var m4=new MonitoringDevice("Efficia12",4,false,12);
-var m5=new MonitoringDevice("Efficia100",5,true,10);
-var m6=new MonitoringDevice("Efficia120",6,true,12);
-var m7=new MonitoringDevice("Efficia150",7,true,15);
-var m8=new MonitoringDevice("IntelliVue430",8,true,9);
-var m9=new MonitoringDevice("IntelliVue450",9,true,10);
-var m10=new MonitoringDevice("IntelliVue500",10,true,12);
-var m11=new MonitoringDevice("IntelliVue550",11,true,12);
-var m12=new MonitoringDevice("IntelliVue600",12,true,15);
-var m13=new MonitoringDevice("IntelliVue700",13,true,15);
-var m14=new MonitoringDevice("IntelliVue800",14,true,14);
-//console.log(m1.getName()+ m1.getIfTouch() + m1.getScreenSize());
-//console.log(m3.getName()+ m3.getIfTouch() + m3.getScreenSize());
-//console.log(m10.getName()+ m10.getIfTouch() + m10.getScreenSize());
-
+var names=["GoldmanWay30E","GoldmanWay40E","Efficia10","Efficia12","Efficia100","Efficia120","Efficia150","IntelliVue430","IntelliVue450","IntelliVue500","IntelliVue550","IntelliVue600","IntelliVue700","IntelliVue800"];
+var touch=[false,false,false,false,true,true,true,true,true,true,true,true,true,true];
+var screensize=[10,12,10,12,10,12,15,9,10,12,12,15,15,14];
 var arrayOfDevices=[];
-arrayOfDevices.push(m1);
-arrayOfDevices.push(m2);
-arrayOfDevices.push(m3);
-arrayOfDevices.push(m4);
-arrayOfDevices.push(m5);
-arrayOfDevices.push(m6);
-arrayOfDevices.push(m7);
-arrayOfDevices.push(m8);
-arrayOfDevices.push(m9);
-arrayOfDevices.push(m10);
-arrayOfDevices.push(m11);
-arrayOfDevices.push(m12)
-arrayOfDevices.push(m13);
-arrayOfDevices.push(m14);
+(function()
+{
+   for(var i=0;i<14;i++)
+   {
+    arrayOfDevices.push(new MonitoringDevice(names[i],i+1,touch[i],screensize[i]));
+   }
+})(); 
 
 function returnDevices(touch,inches)
 {
@@ -67,4 +44,6 @@ function returnDevices(touch,inches)
     if(flag==0)
     console.log("No such monitoring device found");
 }
+
+
 module.exports={result:returnDevices};
