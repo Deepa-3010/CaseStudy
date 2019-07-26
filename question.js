@@ -8,7 +8,7 @@ var questionArray=["Press 1:Display devices by Touch\nPress 2:Display devices by
 "Press 1:Display devices only by screen size\nPress 2:Filter by touch"];
 
 var _touch,_size;
-var touchSelected=false;
+var touchIfSelected=false;
 
 let displayAgentExport=require("./displayDevices");
 
@@ -27,7 +27,7 @@ async function beginQuestion(){
     }
 }
 async function touchSelected(){
-    touchSelected=true;
+    touchIfSelected=true;
     var answer2=await askQuestion(questionArray[1]);
    _touch=touch(answer2);
 
@@ -51,7 +51,7 @@ async function sizeSelected(){
     var answer2=await askQuestion(questionArray[2]);
     _size=answer2;
 
-    if(touchSelected==true){
+    if(touchIfSelected==true){
         displayAgentExport.display(global.Philips.HealthCare.MonitoringDevices,_touch,_size);
     }
     else{
