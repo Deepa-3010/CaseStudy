@@ -6,4 +6,19 @@ function displayAgent(moduleRef,touch,size){
         monitoringDeviceExport.result(_touch,_size);
     })();
 }
-module.exports={display:displayAgent};
+function displayAgentOnlyTouch(moduleRef,touch){
+    console.log(`Touch only ${touch}`)
+    var _touch=touch;
+    moduleRef.displayDevicesFun=(function(){
+        monitoringDeviceExport.resultTouch(_touch);
+    })();
+}
+function displayAgentOnlySize(moduleRef,size){
+    var _size=size;
+    moduleRef.displayDevicesFun=(function(){
+        monitoringDeviceExport.resultSize(_size);
+    })();
+}
+module.exports={display:displayAgent,displayTouch:displayAgentOnlyTouch,displaySize:displayAgentOnlySize};
+//module.exports={displayTouch:displayAgentOnlyTouch};
+//module.exports={displaySize:displayAgentOnlySize};

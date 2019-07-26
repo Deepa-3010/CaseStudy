@@ -5,5 +5,6 @@
     let greetingExport=require("./greeting");
     greetingExport.greetFun();
     let questionExport=require("./question");
+    questionExport.questioning()
 
 })();

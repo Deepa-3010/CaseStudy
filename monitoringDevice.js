@@ -31,8 +31,8 @@ var arrayOfDevices=[];
 })(); 
 
 function returnDevices(touch,inches)
-{
-  var flag=0;   
+{  
+    var flag=0;
     for(var i=0;i<14;i++)
     {
         if(arrayOfDevices[i].getIfTouch()==touch && arrayOfDevices[i].getScreenSize()==inches)
@@ -44,6 +44,36 @@ function returnDevices(touch,inches)
     if(flag==0)
     console.log("No such monitoring device found");
 }
+function returnOnlyByTouch(touch)
+{
+    //console.log("entereed monitor touch only");
+    var flag=0;
+    for(var i=0;i<14;i++)
+    {
+        if(arrayOfDevices[i].getIfTouch()==touch)
+        {
+            flag=1;
+            console.log(arrayOfDevices[i].getName());
+        }
+    }
+    if(flag==0)
+    console.log("No monitoring device found");
+}
 
-
-module.exports={result:returnDevices};
+function resultOnlyBySize(size)
+{
+    var flag=0;
+    for(var i=0;i<14;i++)
+    {
+        if(arrayOfDevices[i].getScreenSize()==size)
+        {
+            flag=1;
+            console.log(arrayOfDevices[i].getName());
+        }
+    }
+    if(flag==0)
+    console.log("No monitoring Device found");
+}
+module.exports={result:returnDevices,resultTouch:returnOnlyByTouch,resultSize:resultOnlyBySize};
+//module.exports={resultTouch:returnOnlyByTouch};
+//module.exports={resultSize:resultOnlyBySize};
