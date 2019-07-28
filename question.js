@@ -124,7 +124,12 @@ async function sizeSelected(){
 
 function touch(answer)
 {
-  if(answer==1)
+    if(answer==0)
+    {
+        console.log("Thank You");
+        process.exit();
+    }
+    if(answer==1)
      return true;
   else 
     return false;  
