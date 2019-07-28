@@ -6,7 +6,7 @@
 
     console.log("\n-----------------------");
     console.log(greeting[random.int(min = 0, max = 2)]);
-    console.log("To exit from the chat bot conversation without answering the question press 9  ");
+    console.log("To exit from the chat bot conversation without answering the question press 0 ");
     }
     module.exports={greetFun:greet};
 })();
