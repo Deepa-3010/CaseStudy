@@ -131,8 +131,13 @@ function touch(answer)
     }
     if(answer==1)
      return true;
-  else 
+    if(answer==2) 
     return false;  
+    if(answer!=1 && answer!=2)
+    {
+        console.log("You have entered a wrong input try again from the start");
+        beginQuestion();
+    }
 }
 
  async function askQuestion( questions ) {
