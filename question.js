@@ -1,18 +1,20 @@
 const questionHelper = require('./questionHelper');
-var questionArray = ["Press 1:Display devices based on Touch\nPress 2:Display devices by Screen Size\n", "Press 1:Touch screen\nPress 2:Non-Touch screen \n", "Enter the size\n",
-    "Press 1:Display devices only by touch\nPress 2:Filter by Screen Size\n",
-    "Press 1:Display devices only by screen size\nPress 2:Filter by touch\n"];
+
+var questionArray = ["Press 1:Display devices based on Touch\nPress 2:Display devices by Screen Size\n", "Press 1:Touch screen\nPress 2:Non-Touch screen \nPress 3:To go to the previous menu\n", "Enter the size\n",
+ "Press 1:Display devices only by touch\nPress 2:Filter by Screen Size\nPress 3:To go to the previous menu\n",
+ "Press 1:Display devices only by screen size\nPress 2:Filter by touch\nPress 3:To go to the previous menu\n"];
+
 
 var _touch, _size;
 var touchIfSelected = false;
 
 let checkBeginFunctionExport=require("./modules")
 let displayAgentExport = require("./displayDevices");
-
+var questionIndex=0;
 async function beginQuestion() {
 
     console.log("\n-----------------------")
-    var answer1 = await questionHelper.askQuestion(questionArray[0]);
+    var answer1 = await questionHelper.askQuestion(questionArray[questionIndex]);
     console.log("\n-----------------------")
     if (parseInt(answer1) == 0) {
         checkBeginFunctionExport.exitMessage();
@@ -26,14 +28,20 @@ async function beginQuestion() {
         beginQuestion();
     }
 }
-async function touchSelected() {
+async function touchSelected(questionIndex) {
     touchIfSelected = true;
     var answer2 = await questionHelper.askQuestion(questionArray[1]);
     if (parseInt(answer2) == 0) {
         checkBeginFunctionExport.exitMessage();
 
     }
+    else if (parseInt(answer2)==3){
+
+        beginQuestion(questionIndex);
+
+    }
     else {
+         questionIndex=1;
         console.log("\n-----------------------")
         _touch = touch(answer2);
 
@@ -41,6 +49,10 @@ async function touchSelected() {
         if (parseInt(answer3) == 0) {
             checkBeginFunctionExport.exitMessage();
 
+        }
+        else if (parseInt(answer3)==3)
+        {
+            touchSelected(questionIndex);
         }
         else {
             console.log("\n-----------------------")
@@ -63,7 +75,7 @@ async function touchSelected() {
     }
 }
 
-async function sizeSelected() {
+async function sizeSelected(questionIndex) {
 
     var answer2 = await questionHelper.askQuestion(questionArray[2]);
     if (parseInt(answer2) == 0) {
@@ -78,6 +90,7 @@ async function sizeSelected() {
             displayAgentExport.display(global, _touch, _size);
         }
         else {
+            questionIndex=2;
             var answer3 = await questionHelper.askQuestion(questionArray[4]);
             if (parseInt(answer3) == 0) {
                 checkBeginFunctionExport.exitMessage();
@@ -88,11 +101,21 @@ async function sizeSelected() {
                 if (answer3 == 1) {
                     displayAgentExport.displaySize(global, _size);
                 }
+                else if(parseInt(answer3)==3)
+                {
+                    sizeSelected(questionIndex);
+                }
+
                 else if (answer3 == 2) {
                     var answer4 = await questionHelper.askQuestion(questionArray[1]);
                     if (parseInt(answer4) == 0) {
                         checkBeginFunctionExport.exitMessage();
 
+                    }
+                    else if(parseInt(answer4)==3)
+                    {
+
+                        sizeSelected(questionIndex);
                     }
                     else {
                         console.log("\n-----------------------")
