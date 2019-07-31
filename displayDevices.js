@@ -7,7 +7,7 @@ function displayAgent(moduleRef,touch,size){
     })();
 }
 function displayAgentOnlyTouch(moduleRef,touch){
-    console.log(`Touch only ${touch}`)
+    //console.log(`Touch only ${touch}`)
     var _touch=touch;
     moduleRef.displayDevicesFun=(function(){
         monitoringDeviceExport.resultTouch(_touch);
