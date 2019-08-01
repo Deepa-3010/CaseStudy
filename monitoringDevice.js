@@ -78,17 +78,16 @@ async function resultOnlyBySize(size)
 }
 async function nextCall()
 {
-    let questionExport=require('./question');
     let questionHelperExport=require('./questionHelper');
-    var answer=await questionHelperExport.askQuestion("\n Press 1:for new search\n Press 2:to exit\n");
+    let questionExport=require('./question');
+    var answer=await questionHelperExport.askQuestion("\n Press 1:to continue\n Press 2:to exit\n");
     if(parseInt(answer)==1)
     {
         questionExport.questioning();
-
     }
     else
     {
-       
+       //let moduleExport=require('./modules');
        questionExport.exitMessage();
     }
 }
