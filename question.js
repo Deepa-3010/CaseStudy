@@ -8,7 +8,7 @@ var questionArray = ["Press 1:Display devices based on Touch\nPress 2:Display de
 var _touch, _size;
 var touchIfSelected = false;
 
-let checkBeginFunctionExport=require("./modules")
+//let checkBeginFunctionExport=require("./modules")
 let displayAgentExport = require("./displayDevices");
 var questionIndex=0;
 async function beginQuestion() {
@@ -17,12 +17,12 @@ async function beginQuestion() {
     var answer1 = await questionHelper.askQuestion(questionArray[questionIndex]);
     console.log("\n-----------------------")
     if (parseInt(answer1) == 0) {
-        checkBeginFunctionExport.exitMessage();
+        exitMessage();
     }
     if (parseInt(answer1) == 1)
-        touchSelected();
+        touchSelected(0);
     if (parseInt(answer1) == 2)
-        sizeSelected();
+        sizeSelected(0);
     if (answer1 != 1 && answer1 != 2) {
         console.log("You have entered wrong input");
         beginQuestion();
@@ -32,7 +32,7 @@ async function touchSelected(questionIndex) {
     touchIfSelected = true;
     var answer2 = await questionHelper.askQuestion(questionArray[1]);
     if (parseInt(answer2) == 0) {
-        checkBeginFunctionExport.exitMessage();
+      exitMessage();
 
     }
     else if (parseInt(answer2)==3){
@@ -47,7 +47,7 @@ async function touchSelected(questionIndex) {
 
         var answer3 = await questionHelper.askQuestion(questionArray[3]);
         if (parseInt(answer3) == 0) {
-            checkBeginFunctionExport.exitMessage();
+            exitMessage();
 
         }
         else if (parseInt(answer3)==3)
@@ -57,18 +57,18 @@ async function touchSelected(questionIndex) {
         else {
             console.log("\n-----------------------")
             if (parseInt(answer3) == 1) {
-                displayAgentExport.displayTouch(global, _touch);
+                displayAgentExport.displayTouch(global.Philips.HealthCare.MonitoringDevices, _touch);
             }
             if (parseInt(answer3) == 2) {
                 var answer4 = await questionHelper.askQuestion(questionArray[2]);
                 if (parseInt(answer4) == 0) {
-                    checkBeginFunctionExport.exitMessage();
+                    exitMessage();
 
                 }
                 else {
                     console.log("\n-----------------------")
                     _size = answer4;
-                    displayAgentExport.display(global, _touch, _size);
+                    displayAgentExport.display(global.Philips.HealthCare.MonitoringDevices, _touch, _size);
                 }
             }
         }
@@ -79,7 +79,7 @@ async function sizeSelected(questionIndex) {
 
     var answer2 = await questionHelper.askQuestion(questionArray[2]);
     if (parseInt(answer2) == 0) {
-        checkBeginFunctionExport.exitMessage();
+        exitMessage();
 
     }
     else {
@@ -87,19 +87,19 @@ async function sizeSelected(questionIndex) {
         _size = answer2;
 
         if (touchIfSelected == true) {
-            displayAgentExport.display(global, _touch, _size);
+            displayAgentExport.display(global.Philips.HealthCare.MonitoringDevices, _touch, _size);
         }
         else {
             questionIndex=2;
             var answer3 = await questionHelper.askQuestion(questionArray[4]);
             if (parseInt(answer3) == 0) {
-                checkBeginFunctionExport.exitMessage();
+                exitMessage();
 
             }
             else {
                 console.log("\n-----------------------")
                 if (answer3 == 1) {
-                    displayAgentExport.displaySize(global, _size);
+                    displayAgentExport.displaySize(global.Philips.HealthCare.MonitoringDevices, _size);
                 }
                 else if(parseInt(answer3)==3)
                 {
@@ -109,7 +109,7 @@ async function sizeSelected(questionIndex) {
                 else if (answer3 == 2) {
                     var answer4 = await questionHelper.askQuestion(questionArray[1]);
                     if (parseInt(answer4) == 0) {
-                        checkBeginFunctionExport.exitMessage();
+                        exitMessage();
 
                     }
                     else if(parseInt(answer4)==3)
@@ -120,7 +120,7 @@ async function sizeSelected(questionIndex) {
                     else {
                         console.log("\n-----------------------")
                         _touch = touch(answer4);
-                        displayAgentExport.display(global, _touch, _size);
+                        displayAgentExport.display(global.Philips.HealthCare.MonitoringDevices, _touch, _size);
                     }
                 }
             }
@@ -143,8 +143,13 @@ function touch(answer) {
     }
 
 }
-module.exports = { questioning: beginQuestion};
+async function exitMessage()
+{
+    console.log("Thank You !");
+    process.exit();
+}
+module.exports = { questioning: beginQuestion,exitMessage:exitMessage};
 
 
 
-//module.exports={questioning:beginQuestion};
+
