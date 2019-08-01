@@ -1,19 +1,17 @@
 const sinon = require('sinon')
-//var expect = chai.expect;
 const controllerExport=require('../controller')
 const mainExport=require("../main")
 const greetingExport=require("../greeting")
 let questionExport=require("../question")
-const questionHelper = require('../questionHelper');
 let displayAgentExport=require("../displayDevices");
 const monitoringDeviceExport=require('../monitoringDevice')
 describe('to check each function call',function(){
-    it('to check',function(){
-        controllerExport.controller();
-     } )
      it('check if main called',function(){
          mainExport.mainObject(global);
      })
+     it('check if main called',function(){
+        mainExport.mainObject();
+    })
      it('check if greeting is called',function(){
           greetingExport.greetFun();
      })
