@@ -30,7 +30,7 @@ var arrayOfDevices=[];
    }
 })(); 
 
-function returnDevices(touch,inches)
+async function returnDevices(touch,inches)
 {  
     var flag=0;
     for(var i=0;i<14;i++)
@@ -43,10 +43,10 @@ function returnDevices(touch,inches)
     }
     if(flag==0)
     console.log("No such monitoring device found");
+nextCall();
 }
-function returnOnlyByTouch(touch)
+async function returnOnlyByTouch(touch)
 {
-    //console.log("entereed monitor touch only");
     var flag=0;
     for(var i=0;i<14;i++)
     {
@@ -58,9 +58,10 @@ function returnOnlyByTouch(touch)
     }
     if(flag==0)
     console.log("No monitoring device found");
+    nextCall();
 }
 
-function resultOnlyBySize(size)
+async function resultOnlyBySize(size)
 {
     var flag=0;
     for(var i=0;i<14;i++)
@@ -73,7 +74,21 @@ function resultOnlyBySize(size)
     }
     if(flag==0)
     console.log("No monitoring Device found");
+    nextCall();
+}
+async function nextCall()
+{
+    let questionHelperExport=require('./questionHelper');
+    let questionExport=require('./question');
+    var answer=await questionHelperExport.askQuestion("\n Press 1:to continue\n Press 2:to exit\n");
+    if(parseInt(answer)==1)
+    {
+        questionExport.questioning();
+    }
+    else
+    {
+       //let moduleExport=require('./modules');
+       questionExport.exitMessage();
+    }
 }
 module.exports={result:returnDevices,resultTouch:returnOnlyByTouch,resultSize:resultOnlyBySize};
-//module.exports={resultTouch:returnOnlyByTouch};
-//module.exports={resultSize:resultOnlyBySize};

@@ -1,0 +1,19 @@
+{
+  "name": "moduletest",
+  "version": "1.0.0",
+  "description": "\"testing\"",
+  "main": "question.test.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "sinon": "^7.3.2"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
