@@ -1,0 +1,32 @@
+[
+	{
+    	
+			"questionId":1,
+	    	"questionString":"Select anyone of the following options for screen type :",
+	        "options": {
+	            "1": "touch",
+	            "2": "nontouch",
+	            "3": "does not matter"
+	        }
+	},
+    {
+        
+	    	"questionId":2,
+	    	"questionString":"What screen size do you want ?",
+	        "options": {
+	            "1": "Does Not matter",
+	            "2": "Size"
+	        }
+        
+    },
+    {
+	    	"questionId":3,
+	    	"questionString":"How would you like to continue ?",
+	        "options": {
+	            "1": "Exit and contact with a sales Person",
+	            "2": "Continue Searching"
+        	}
+        
+    }
+    
+]
