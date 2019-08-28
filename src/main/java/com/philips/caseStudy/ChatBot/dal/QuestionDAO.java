@@ -27,8 +27,6 @@ public class QuestionDAO implements QuestionDAOInterface {
   @Override
   public void getQuestion() throws IOException {
     //read json file data to String
-    System.out.println("In dao");
-
     final byte[] jsonData = Files.readAllBytes(Paths.get("C:/Users/320065420/BootCamp/ChatBot/src/main/java/com/philips/caseStudy/ChatBot/domain/question.txt"
         ));
 
@@ -44,20 +42,12 @@ public class QuestionDAO implements QuestionDAOInterface {
     }
 
 
-    //
-    //    //convert json string to object
-    //    final Question question = objectMapper.readValue(jsonData, Question.class);
-    //
-    //    System.out.println("question Object\n"+question);
-
-
   }
 
 
   @Override
   public Question getQuestionByIndex(int index) throws IOException {
     //read json file data to String
-    System.out.println("In DAo");
     final byte[] jsonData = Files.readAllBytes(Paths.get("C:/Users/320065420/BootCamp/ChatBot/src/main/java/com/philips/caseStudy/ChatBot/domain/question.txt"
         ));
 
@@ -66,10 +56,15 @@ public class QuestionDAO implements QuestionDAOInterface {
 
     final List<Question> questionList = objectMapper.readValue(jsonData, new TypeReference<List<Question>>(){});
 
+    return getRequiredQuestion(questionList,index);
+
+  }
+
+  @Override
+  public Question getRequiredQuestion(List<Question> questionList,int index) {
     final ListIterator<Question> questionListIterator=questionList.listIterator();
+
     while(questionListIterator.hasNext()) {
-
-
       final Question currentQuestion=questionListIterator.next();
 
       if(currentQuestion.getQuestionId()==index) {
@@ -79,7 +74,6 @@ public class QuestionDAO implements QuestionDAOInterface {
     }
     return null;
   }
-
 
   @Override
   public void createQuestion() throws IOException {

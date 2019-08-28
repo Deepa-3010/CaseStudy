@@ -4,6 +4,7 @@
 package com.philips.caseStudy.ChatBot.dal;
 
 import java.io.IOException;
+import java.util.List;
 import com.philips.caseStudy.ChatBot.domain.Question;
 
 
@@ -14,5 +15,7 @@ public interface QuestionDAOInterface {
   Question getQuestionByIndex(int index) throws IOException;
 
   void createQuestion() throws IOException;
+
+  public Question getRequiredQuestion(List<Question> questionList,int index);
 
 }

@@ -4,7 +4,6 @@
 package com.philips.caseStudy.ChatBot.web;
 
 import java.io.IOException;
-import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -49,10 +48,16 @@ public class ChatBotController {
   @PostMapping("/api/devices")
   public ResponseEntity<MonitoringDeviceDTO> addDevices (@RequestBody MonitoringDeviceDTO toBeSaved){
     final int id=service.save(toBeSaved).getId();
-    final HttpHeaders headers1=new HttpHeaders();
-    headers1.setLocation(URI.create("/api/devices/"+id));
+    System.out.println(id);
+    if(id!=0)
+    {
 
-    return new ResponseEntity<>(headers1,HttpStatus.CREATED);
+      return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    else
+    {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 
 
@@ -69,17 +74,19 @@ public class ChatBotController {
 
   @GetMapping("/api/questions/{index}")
   public ResponseEntity<Question> getQuestionByIndex(@PathVariable("index") int index) throws IOException{
-    System.out.println("In api :");
     final Question question=questionService.returnQuestion(index);
     if(question!=null) {
-      System.out.println("Question ! nulll");
       return new ResponseEntity<>(question,HttpStatus.OK);
     }
-    System.out.println("Question null");
     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
   }
 
+  @GetMapping("/api/users")
+  public ResponseEntity<String> getUsers() {
+    service.findAll();
+    return new ResponseEntity<>("HII",HttpStatus.OK);
+  }
 
 }
 

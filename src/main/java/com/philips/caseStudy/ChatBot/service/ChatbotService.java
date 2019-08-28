@@ -4,6 +4,7 @@
 package com.philips.caseStudy.ChatBot.service;
 
 import java.util.List;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.philips.caseStudy.ChatBot.dal.MonitoringDAO;
@@ -23,8 +24,6 @@ public class ChatbotService implements ChatBotServiceInterface {
     monitoringDAO = monitoringDao;
   }
 
-
-
   UserInfoDAO userInfoDAO;
   @Autowired
   public void setUserInfoDao(UserInfoDAO userInfoDao) {
@@ -33,7 +32,14 @@ public class ChatbotService implements ChatBotServiceInterface {
 
   @Override
   public MonitoringDevice save(MonitoringDeviceDTO device) {
-    return monitoringDAO.save(device);
+    if(monitoringDAO.findByParameters(device)){
+      return monitoringDAO.save(device);
+    }
+    else
+    {
+      final ModelMapper model=new ModelMapper();
+      return model.map(device,MonitoringDevice.class);
+    }
   }
 
   @Override
@@ -43,13 +49,23 @@ public class ChatbotService implements ChatBotServiceInterface {
 
   @Override
   public List<MonitoringDevice> findByUserChoice(String touch, float screenSize) {
+    if(touch==null && screenSize==0)
+    {
+      findAll();
+    }
     return monitoringDAO.findByUserChoice(touch, screenSize);
   }
 
   @Override
   public UserInfo saveUsers(UserInfoDTO user) {
-    return userInfoDAO.save(user);
+    if(userInfoDAO.findUserByEmail(user) && userInfoDAO.findUserByPhoneNumber(user))
+    {
+      return userInfoDAO.save(user);
+    }
+    else
+    {
+      final ModelMapper model=new ModelMapper();
+      return model.map(user,UserInfo.class);
+    }
   }
-
-
 }

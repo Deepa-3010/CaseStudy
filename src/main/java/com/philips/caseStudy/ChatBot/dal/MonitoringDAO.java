@@ -19,8 +19,6 @@ public class MonitoringDAO implements MonitoringDeviceInterface {
   @PersistenceContext
   EntityManager em;
 
-
-
   @Override
   public MonitoringDevice save(MonitoringDeviceDTO device) {
     final ModelMapper model=new ModelMapper();
@@ -41,14 +39,33 @@ public class MonitoringDAO implements MonitoringDeviceInterface {
   public List<MonitoringDevice> findByUserChoice(String touch,float screenSize) {
 
     if(touch==null) {
-      return em.createQuery("select device from MonitoringDevice as device where device.screenSize:=sizeParam").setParameter("sizeParam", screenSize).getResultList();
+      return em.createQuery("select device from MonitoringDevice as device where device.screenSize=:sizeParam").setParameter("sizeParam", screenSize).getResultList();
     }
     else if(screenSize==0) {
-      return em.createQuery("select device from MonitoringDevice as device where device.touch:=touchParam").setParameter("touchParam", touch).getResultList();
+      return em.createQuery("select device from MonitoringDevice as device where device.touch=:touchParam").setParameter("touchParam", touch).getResultList();
 
     }
     else {
-      return em.createQuery("select device from MonitoringDevice as device where device.screenSize:=sizeParam AND device.touch:=touchParam").setParameter("sizeParam", screenSize).setParameter("touchParam", touch).getResultList();
+      return em.createQuery("select device from MonitoringDevice as device where device.screenSize=:sizeParam AND device.touch=:touchParam").setParameter("sizeParam", screenSize).setParameter("touchParam", touch).getResultList();
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  public boolean findByParameters(MonitoringDeviceDTO dev) {
+
+
+    final List<MonitoringDevice> retrieveDevice=em.createQuery("select device from MonitoringDevice as device where device.name=:nameParam AND device.touch=:touchParam AND device.screenSize=:screenParam")
+        .setParameter("nameParam", dev.getName())
+        .setParameter("touchParam", dev.getTouch())
+        .setParameter("screenParam", dev.getScreenSize())
+        .getResultList();
+
+    System.out.println("Retrieved : "+retrieveDevice);
+    if(retrieveDevice.size()==0) {
+
+      return true;
+    } else {
+      return false;
     }
   }
 

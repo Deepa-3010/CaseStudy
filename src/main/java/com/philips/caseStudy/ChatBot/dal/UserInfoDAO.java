@@ -39,4 +39,30 @@ public class UserInfoDAO implements UserInfoInterface {
     return em.createQuery("select user from UserInfo as user ").getResultList();
   }
 
+  @SuppressWarnings("unchecked")
+  public boolean findUserByEmail(UserInfoDTO user)
+  {
+    final List<UserInfoDTO> users=em.createQuery("select user from UserInfo as user where email=:emailParam ")
+        .setParameter("emailParam", user.getEmail())
+        .getResultList();
+    if(users.isEmpty()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  public boolean findUserByPhoneNumber(UserInfoDTO user)
+  {
+    final List<UserInfoDTO> users=em.createQuery("select user from UserInfo as user where contactNo=:contactParam ")
+        .setParameter("contactParam", user.getContactNo())
+        .getResultList();
+    if(users.isEmpty()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
