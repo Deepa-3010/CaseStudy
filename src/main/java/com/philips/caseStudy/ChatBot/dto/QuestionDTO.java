@@ -4,6 +4,7 @@
 package com.philips.caseStudy.ChatBot.dto;
 
 import java.util.Map;
+import org.modelmapper.ModelMapper;
 import com.philips.caseStudy.ChatBot.domain.Question;
 
 public class QuestionDTO {
@@ -41,5 +42,11 @@ public class QuestionDTO {
     this.options = options;
   }
 
+  public Question changeDTOToEntity(QuestionDTO que)
+  {
+    final ModelMapper model=new ModelMapper();
+    final Question ques=model.map(que,Question.class);
+    return ques;
 
+  }
 }

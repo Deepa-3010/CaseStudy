@@ -3,6 +3,7 @@
  */
 package com.philips.caseStudy.ChatBot.dto;
 
+import org.modelmapper.ModelMapper;
 import com.philips.caseStudy.ChatBot.domain.MonitoringDevice;
 
 public class MonitoringDeviceDTO {
@@ -40,5 +41,11 @@ public class MonitoringDeviceDTO {
     this.screenSize = screenSize;
   }
 
+  public MonitoringDevice changeDTOToEntity(MonitoringDeviceDTO device)
+  {
+    final ModelMapper model=new ModelMapper();
+    final MonitoringDevice devices=model.map(device,MonitoringDevice.class);
+    return devices;
+  }
 
 }

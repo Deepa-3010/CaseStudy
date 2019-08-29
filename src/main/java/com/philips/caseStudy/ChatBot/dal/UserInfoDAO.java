@@ -6,7 +6,6 @@ package com.philips.caseStudy.ChatBot.dal;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.philips.caseStudy.ChatBot.domain.UserInfo;
@@ -25,7 +24,7 @@ public class UserInfoDAO implements UserInfoInterface {
 
   @Override
   public UserInfo save(UserInfoDTO user) {
-    final UserInfo entityUser=changeDTOToEntity(user);
+    final UserInfo entityUser=user.changeDTOToEntity(user);
     em.persist(entityUser);
     return entityUser;
   }
@@ -64,11 +63,5 @@ public class UserInfoDAO implements UserInfoInterface {
     }
   }
 
-  public UserInfo changeDTOToEntity(UserInfoDTO user)
-  {
-    final ModelMapper model=new ModelMapper();
-    final UserInfo users=model.map(user,UserInfo.class);
-    return users;
 
-  }
 }

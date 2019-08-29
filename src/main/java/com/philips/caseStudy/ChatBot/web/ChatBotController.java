@@ -3,7 +3,9 @@
  */
 package com.philips.caseStudy.ChatBot.web;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,8 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.philips.caseStudy.ChatBot.consoleUI.ChatBotView;
+import com.philips.caseStudy.ChatBot.domain.MonitoringDevice;
 import com.philips.caseStudy.ChatBot.domain.Question;
+import com.philips.caseStudy.ChatBot.dto.AnswerDTO;
 import com.philips.caseStudy.ChatBot.dto.MonitoringDeviceDTO;
 import com.philips.caseStudy.ChatBot.dto.UserInfoDTO;
 import com.philips.caseStudy.ChatBot.service.ChatBotServiceInterface;
@@ -72,17 +79,31 @@ public class ChatBotController {
   }
 
   @GetMapping("/api/questions/{index}/{answer}")
-  public ResponseEntity<String> getQuestionByIndex(@PathVariable("index") int index,@PathVariable("answer") String answer) throws IOException{
+  public ResponseEntity<String> validateAnswer(@PathVariable("index") int index,@PathVariable("answer") String answer) throws IOException{
     final boolean ifOptionPresent=questionService.validate(index, answer);
     final HttpHeaders headers=new HttpHeaders();
     headers.add("ErrorMessage","Please enter among the correct options");
     if(ifOptionPresent) {
       return new ResponseEntity<>(HttpStatus.OK);
     }
-
     return new ResponseEntity<>(headers,HttpStatus.BAD_REQUEST);
-
   }
+
+
+  @PostMapping("/api/getDevices")
+  public ResponseEntity<String> getDevices(@RequestBody AnswerDTO answerSet) throws JsonGenerationException, JsonMappingException, IOException{
+    final List<MonitoringDevice> devices=service.findByUserChoice(answerSet.getUserAnswer().get(0),Float.parseFloat(answerSet.getUserAnswer().get(1)));
+    final ByteArrayOutputStream out=new ByteArrayOutputStream();
+    final ObjectMapper mapper=new ObjectMapper();
+    mapper.writeValue(out, devices);
+
+    final byte[] jsonData=out.toByteArray();
+    System.out.println(new String(jsonData));
+
+    return new ResponseEntity<>(new String(jsonData),HttpStatus.OK);
+  }
+
+
 
 }
 

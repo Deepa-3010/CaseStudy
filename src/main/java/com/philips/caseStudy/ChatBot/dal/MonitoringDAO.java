@@ -6,7 +6,6 @@ package com.philips.caseStudy.ChatBot.dal;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.philips.caseStudy.ChatBot.domain.MonitoringDevice;
@@ -23,7 +22,7 @@ public class MonitoringDAO implements MonitoringDeviceInterface {
 
   @Override
   public MonitoringDevice save(MonitoringDeviceDTO device) {
-    final MonitoringDevice entityDevice=changeDTOToEntity(device);
+    final MonitoringDevice entityDevice=device.changeDTOToEntity(device);
     em.persist(entityDevice);
     return entityDevice;
   }
@@ -66,11 +65,6 @@ public class MonitoringDAO implements MonitoringDeviceInterface {
     }
   }
 
-  public MonitoringDevice changeDTOToEntity(MonitoringDeviceDTO device)
-  {
-    final ModelMapper model=new ModelMapper();
-    final MonitoringDevice devices=model.map(device,MonitoringDevice.class);
-    return devices;
-  }
+
 
 }

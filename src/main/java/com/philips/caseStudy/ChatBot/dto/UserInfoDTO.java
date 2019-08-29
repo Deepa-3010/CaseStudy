@@ -3,6 +3,7 @@
  */
 package com.philips.caseStudy.ChatBot.dto;
 
+import org.modelmapper.ModelMapper;
 import com.philips.caseStudy.ChatBot.domain.UserInfo;
 
 public class UserInfoDTO {
@@ -50,5 +51,13 @@ public class UserInfoDTO {
   }
   public void setCity(String city) {
     this.city = city;
+  }
+
+  public UserInfo changeDTOToEntity(UserInfoDTO user)
+  {
+    final ModelMapper model=new ModelMapper();
+    final UserInfo users=model.map(user,UserInfo.class);
+    return users;
+
   }
 }

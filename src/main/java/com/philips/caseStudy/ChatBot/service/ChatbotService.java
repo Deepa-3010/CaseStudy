@@ -39,7 +39,7 @@ public class ChatbotService implements ChatBotServiceInterface {
     }
     else
     {
-      return monitoringDAO.changeDTOToEntity(device);
+      return device.changeDTOToEntity(device);
     }
   }
 
@@ -61,7 +61,7 @@ public class ChatbotService implements ChatBotServiceInterface {
     }
     else
     {
-      return userInfoDAO.changeDTOToEntity(user);
+      return user.changeDTOToEntity(user);
     }
 
   }
