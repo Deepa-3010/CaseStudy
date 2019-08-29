@@ -14,4 +14,12 @@ public interface MonitoringDeviceInterface {
 
   List<MonitoringDevice> findAll();
 
+  public List<MonitoringDevice> findByUserChoiceOnlyTouch(String touch);
+
+  public List<MonitoringDevice> findByUserChoiceOnlyScreenSize(float screenSize);
+
+  public List<MonitoringDevice> findByUserChoiceByBothTouchAndScreenSize(String touch,float screenSize);
+
+  public boolean findByParameters(MonitoringDeviceDTO device);
+
 }

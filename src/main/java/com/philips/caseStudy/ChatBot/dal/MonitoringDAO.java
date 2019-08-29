@@ -35,25 +35,39 @@ public class MonitoringDAO implements MonitoringDeviceInterface {
     return em.createQuery("select device from MonitoringDevice as device ").getResultList();
   }
 
+  @Override
   @SuppressWarnings("unchecked")
-  public List<MonitoringDevice> findByUserChoice(String touch,float screenSize) {
-
-    if(touch==null) {
-      return em.createQuery("select device from MonitoringDevice as device where device.screenSize=:sizeParam").setParameter("sizeParam", screenSize).getResultList();
-    }
-    else if(screenSize==0) {
-      return em.createQuery("select device from MonitoringDevice as device where device.touch=:touchParam").setParameter("touchParam", touch).getResultList();
-
-    }
-    else {
-      return em.createQuery("select device from MonitoringDevice as device where device.screenSize=:sizeParam AND device.touch=:touchParam").setParameter("sizeParam", screenSize).setParameter("touchParam", touch).getResultList();
-    }
+  public List<MonitoringDevice> findByUserChoiceOnlyTouch(String touch)
+  {
+    return em.createQuery("select device.name from MonitoringDevice as device where device.touch=:touchParam")
+        .setParameter("touchParam",touch)
+        .getResultList();
   }
 
+  @Override
+  @SuppressWarnings("unchecked")
+  public List<MonitoringDevice> findByUserChoiceOnlyScreenSize(float screenSize)
+  {
+    return em.createQuery("select device.name from MonitoringDevice as device where device.screenSize=:sizeParam")
+        .setParameter("sizeParam", screenSize)
+        .getResultList();
+  }
+  @Override
+  @SuppressWarnings("unchecked")
+  public List<MonitoringDevice> findByUserChoiceByBothTouchAndScreenSize(String touch,float screenSize) {
+
+
+    return em.createQuery("select device.name from MonitoringDevice as device where device.screenSize=:sizeParam AND device.touch=:touchParam")
+        .setParameter("sizeParam", screenSize)
+        .setParameter("touchParam", touch)
+        .getResultList();
+  }
+
+  @Override
   @SuppressWarnings("unchecked")
   public boolean findByParameters(MonitoringDeviceDTO device)
   {
-    final List<MonitoringDevice> devices=em.createQuery("select device from MonitoringDevice as device where device.screenSize=:sizeParam AND device.touch=:touchParam AND device.name=:nameParam")
+    final List<MonitoringDevice> devices=em.createQuery("select device.name from MonitoringDevice as device where device.screenSize=:sizeParam AND device.touch=:touchParam AND device.name=:nameParam")
         .setParameter("sizeParam", device.getScreenSize())
         .setParameter("touchParam", device.getTouch())
         .setParameter("nameParam", device.getName())

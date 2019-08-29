@@ -92,18 +92,46 @@ public class ChatBotController {
 
   @PostMapping("/api/getDevices")
   public ResponseEntity<String> getDevices(@RequestBody AnswerDTO answerSet) throws JsonGenerationException, JsonMappingException, IOException{
-    final List<MonitoringDevice> devices=service.findByUserChoice(answerSet.getUserAnswer().get(0),Float.parseFloat(answerSet.getUserAnswer().get(1)));
+    final List<MonitoringDevice> devices;
+    if(answerSet.getUserAnswer().get(0)==null && answerSet.getUserAnswer().get(1)==null )
+    {
+      devices=service.findAll();
+    }
+
+    else if(answerSet.getUserAnswer().get(0)==null && answerSet.getUserAnswer().get(1)!=null )
+    {
+      devices=service.findByUserChoiceByScreenSizeOnly(Float.parseFloat(answerSet.getUserAnswer().get(1)));
+    }
+
+    else if(answerSet.getUserAnswer().get(0)!=null && answerSet.getUserAnswer().get(1)==null )
+    {
+      devices=service.findByUserChoiceByTouchOnly(answerSet.getUserAnswer().get(0));
+    }
+
+    else
+    {
+      devices=service.findByUserChoiceByBothTouchAndScreenSize(answerSet.getUserAnswer().get(0),Float.parseFloat(answerSet.getUserAnswer().get(1)));
+    }
+    if(devices.isEmpty()) {
+      return new ResponseEntity<>("There are no such devices try again",HttpStatus.BAD_REQUEST);
+    } else
+    {
+      final String jsonData=listToJsonConversion(devices);
+
+      return new ResponseEntity<>(jsonData,HttpStatus.OK);
+    }
+  }
+
+  public String listToJsonConversion(List<MonitoringDevice> devices) throws JsonGenerationException, JsonMappingException, IOException
+  {
     final ByteArrayOutputStream out=new ByteArrayOutputStream();
     final ObjectMapper mapper=new ObjectMapper();
     mapper.writeValue(out, devices);
 
     final byte[] jsonData=out.toByteArray();
-    System.out.println(new String(jsonData));
+    return (new String(jsonData));
 
-    return new ResponseEntity<>(new String(jsonData),HttpStatus.OK);
   }
-
-
 
 }
 

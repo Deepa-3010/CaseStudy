@@ -49,8 +49,18 @@ public class ChatbotService implements ChatBotServiceInterface {
   }
 
   @Override
-  public List<MonitoringDevice> findByUserChoice(String touch, float screenSize) {
-    return monitoringDAO.findByUserChoice(touch, screenSize);
+  public List<MonitoringDevice> findByUserChoiceByBothTouchAndScreenSize(String touch, float screenSize) {
+    return monitoringDAO.findByUserChoiceByBothTouchAndScreenSize(touch, screenSize);
+  }
+
+  @Override
+  public List<MonitoringDevice> findByUserChoiceByTouchOnly(String touch) {
+    return monitoringDAO.findByUserChoiceOnlyTouch(touch);
+  }
+
+  @Override
+  public List<MonitoringDevice> findByUserChoiceByScreenSizeOnly(float screenSize) {
+    return monitoringDAO.findByUserChoiceOnlyScreenSize(screenSize);
   }
 
   @Override

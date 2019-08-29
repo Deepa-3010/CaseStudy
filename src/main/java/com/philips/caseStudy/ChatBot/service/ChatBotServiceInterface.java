@@ -16,8 +16,12 @@ public interface ChatBotServiceInterface {
 
   List<MonitoringDevice> findAll();
 
-  List<MonitoringDevice> findByUserChoice(String touch, float screenSize);
-
   UserInfo saveUsers(UserInfoDTO user);
+
+  public List<MonitoringDevice> findByUserChoiceByBothTouchAndScreenSize(String touch, float screenSize) ;
+
+  public List<MonitoringDevice> findByUserChoiceByTouchOnly(String touch);
+
+  public List<MonitoringDevice> findByUserChoiceByScreenSizeOnly(float screenSize);
 
 }

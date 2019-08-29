@@ -168,6 +168,7 @@ public class ChatBotView implements ChatBotConsoleUIInterface {
   }
 
   public void startQuestion() {
+    userAnswers.clear();
     int index = 0;
     int responseCode = 0;
     do {
@@ -235,7 +236,6 @@ public class ChatBotView implements ChatBotConsoleUIInterface {
       os.flush();
       os.close();
       final int responseCode = postConnection.getResponseCode();
-      System.out.println("POST Response Code :  " + responseCode);
       if(responseCode == HttpURLConnection.HTTP_OK) { //success
         final BufferedReader in = new BufferedReader(new InputStreamReader(postConnection.getInputStream()));
         String inputLine;
@@ -243,9 +243,8 @@ public class ChatBotView implements ChatBotConsoleUIInterface {
         while ((inputLine = in.readLine()) != null) {
           response.append(inputLine);
         }
-        in .close(); // print result
+        in .close();
         System.out.println(response.toString());
-
       }
       else {
         System.out.println("POST NOT WORKED");
