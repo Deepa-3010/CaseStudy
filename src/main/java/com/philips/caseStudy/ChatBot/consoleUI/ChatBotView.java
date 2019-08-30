@@ -247,7 +247,7 @@ public class ChatBotView implements ChatBotConsoleUIInterface {
         System.out.println(response.toString());
       }
       else {
-        System.out.println("POST NOT WORKED");
+        System.out.println("This device is not present try again");
       }
 
 
@@ -262,7 +262,7 @@ public class ChatBotView implements ChatBotConsoleUIInterface {
 
     final ChatBotView view = new ChatBotView();
 
-    //view.startChatBot();
+    view.startChatBot();
     view.startQuestion();
     view.mapUserInputToParametersOfDevicesTouch();
     view.mapUserInputToParametersOfDevicesScreenSize();

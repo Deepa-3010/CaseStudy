@@ -113,7 +113,7 @@ public class ChatBotController {
       devices=service.findByUserChoiceByBothTouchAndScreenSize(answerSet.getUserAnswer().get(0),Float.parseFloat(answerSet.getUserAnswer().get(1)));
     }
     if(devices.isEmpty()) {
-      return new ResponseEntity<>("There are no such devices try again",HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     } else
     {
       final String jsonData=listToJsonConversion(devices);
